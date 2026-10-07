@@ -1,3 +1,6 @@
+#ifndef HEADER_H
+#define HEADER_H
+
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -8,3 +11,5 @@
 #include <random>
 #include <sstream>
 #include <string>
+
+#endif
