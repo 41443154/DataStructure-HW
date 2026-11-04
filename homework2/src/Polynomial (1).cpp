@@ -1,8 +1,3 @@
-// Homework 2 - Polynomial
-// Design focus: the required dynamic Term array, safe object lifetime,
-// normalized sparse polynomials, reliable I/O, and reproducible tests.
-// Build: g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic Polynomial.cpp -o Polynomial
-
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -16,7 +11,7 @@
 
 using namespace std;
 
-class Polynomial;  // 前向宣告：與題目要求的類別關係保持一致。
+class Polynomial;  // 前向宣告
 
 class Term {
     friend class Polynomial;
@@ -27,8 +22,9 @@ private:
 
 namespace detail {
 
-// 依作業限定的標頭清單撰寫，不需要額外的 <memory>。
-// 這個小工具只負責暫存陣列的自動釋放，主資料仍由 Polynomial::termArray 管理。
+// 不需要額外的 <memory>。
+// 這個小工具只負責暫存陣列的自動釋放
+//主資料Polynomial::termArray管理。
 template <typename T>
 class ScopedArray {
     T* data;
@@ -42,15 +38,16 @@ public:
     ScopedArray& operator=(const ScopedArray&) = delete;
 };
 
-// 從 unsigned int 的位元範圍取得 int 最大值，不需要 <climits>。
+// 從 unsigned int 的位元範圍取得 int 最大值
 const int MAX_INT_VALUE = static_cast<int>(~0u >> 1);
 
-// <cmath> 定義 HUGE_VALF 與 nextafter；不用額外的 <limits>。
+// <cmath> 定義 最大有限浮點數 HUGE_VALF 與 nextafter 
 long double maxFiniteFloat() {
     return static_cast<long double>(nextafter(HUGE_VALF, 0.0f));
 }
 
-// 不使用 <charconv>：逐位解析非負整數，並自行檢查溢位。
+//逐位解析非負整數，並自行檢查溢位。
+//解析非負整數 英文
 int parseNonnegativeInt(const string& value, const string& field) {
     if (value.empty()) throw field + "不可為空";
     size_t pos = 0;
@@ -90,8 +87,8 @@ float parseFiniteFloat(const string& text, const string& field) {
     }
 }
 
-// <sstream> 的 precision() 即可實現可往返的 float 輸出，
-// 從 1 到 9 位有效數字挑選能還原原值的最短寫法。
+//precision() 即可實現可往返的 float 輸出
+// 從 1 到 9 位有效數字挑選能還原原值的最短寫法
 string formatFloat(float value) {
     for (int digits = 1; digits <= 9; ++digits) {
         ostringstream output;
