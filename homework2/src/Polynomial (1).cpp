@@ -25,6 +25,12 @@ private:
     int capacity;    // 已配置的容量
     int terms;       // 非零項數量
 
+// 計算擴充後的新容量
+// 建立新的動態陣列
+// 將原本的有效資料複製到新陣列
+// 釋放舊陣列的記憶體
+// 將指標指向新陣列
+// 更新陣列容量
     void row() { // 容量不足時擴充為兩倍
         int newCapacity = capacity * 2;
         Term* temp = new Term[newCapacity];
@@ -33,7 +39,11 @@ private:
         termArray = temp;
         capacity = newCapacity;
     }
-
+// 如果係數為 0，直接跳過不儲存
+// 如果陣列已滿，呼叫 row() 擴充容量
+// 儲存新項目的係數
+// 儲存新項目的指數
+// 將有效項目數量加 1
     void AppendTerm(float coef, int exp) { // 已排序的結果直接接在最後
         if (coef == 0.0f) return;
         if (terms == capacity) row();
@@ -41,7 +51,9 @@ private:
         termArray[terms].exp = exp;
         ++terms;
     }
-
+// 交換兩個物件的動態陣列指標
+// 交換兩個物件的陣列容量
+// 交換兩個物件的有效項目數量
     void Swap(Polynomial& other) {
         swap(termArray, other.termArray);
         swap(capacity, other.capacity);
